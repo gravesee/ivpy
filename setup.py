@@ -1,18 +1,11 @@
 from distutils.core import setup, Extension
 import numpy
 
-std_module = Extension('std', sources=['cpytest/std.c'], include_dirs=[numpy.get_include()])
+sources = [f"src/{x}.c" for x in ['_core', 'variable', 'xtab', 'queue']]
 
-setup(name='std_test',
+extension = Extension('_core', sources=sources, include_dirs=[numpy.get_include(), 'src'])
+
+setup(name='ivypy',
       version='0.1',
-      description='Module for calculating standard deviation.',
-      # install_requires = ["cycler==0.10.0",
-      #                     "kiwisolver==1.0.1"
-      #                     "matplotlib==3.0.2",
-      #                     "numpy==1.16.1",
-      #                     "pandas==0.24.1",
-      #                     "pyparsing==2.3.1",
-      #                     "python-dateutil==2.8.0",
-      #                     "pytz==2018.9",
-      #                     "six==1.12.0"],
-      ext_modules=[std_module])
+      description='Discretize continuous arrays using information value.',
+      ext_modules=[extension])

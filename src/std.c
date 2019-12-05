@@ -2,9 +2,6 @@
 #include <numpy/arrayobject.h>
 #include <math.h>
 
-#define PY_PRINTF(o) \
-    PyObject_Print(o, stdout, 0); printf("\n");
-
 
 double calcSD(double data[], int size)
 {

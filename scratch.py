@@ -1,10 +1,8 @@
-import std
-import statistics as stat 
+from ivpy import discretize
+import seaborn as sns
 
-check_num = [1, 2, 4, 7]
+if __name__ == "__main__":
 
-test1 = std.standard_dev(check_num)
-test2 = stat.stdev(check_num)
+    d = sns.load_dataset('titanic')
 
-print(f"Stats std num {test1}")
-print(f"C --- std num {test2}")
+    discretize(d['fare'], d['survived'], maxbin=6)
