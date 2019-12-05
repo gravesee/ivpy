@@ -21,3 +21,6 @@ A package with a single function. It's entire purpose is to return a set of brea
 
 - Only binary response variables supported
 
+## Examples
+
+Examples of usage can be found in the [examples](examples/example02.ipynb) folder.
