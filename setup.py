@@ -1,6 +1,7 @@
 from distutils.core import setup, Extension
+import numpy
 
-std_module = Extension('std', sources=['cpytest/std.c'])
+std_module = Extension('std', sources=['cpytest/std.c'], include_dirs=[numpy.get_include()])
 
 setup(name='std_test',
       version='0.1',

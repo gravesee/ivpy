@@ -1,5 +1,10 @@
 #include <Python.h>
+#include <numpy/arrayobject.h>
 #include <math.h>
+
+#define PY_PRINTF(o) \
+    PyObject_Print(o, stdout, 0); printf("\n");
+
 
 double calcSD(double data[], int size)
 {
@@ -41,14 +46,36 @@ static PyObject * std_standard_dev(PyObject *self, PyObject* args)
     return PyFloat_FromDouble(calcSD(pr, pr_length));
 }
 
+// Help from this article: http://folk.uio.no/inf3330/scripting/doc/python/NumPy/Numeric/numpy-13.html
+static PyObject * std_standard_dev_numpy(PyObject *self, PyObject* args)
+{
+
+    PyArrayObject *array;
+    int n;
+    
+    if (!PyArg_ParseTuple(args, "O", &array))
+        return NULL;
+    
+    if (array->nd != 1 && array->descr->type_num != PyArray_DOUBLE) {
+        PyErr_SetString(PyExc_ValueError, "array must be single dimension and of type float");
+    }
+
+    n = array->dimensions[0];
+       
+    return PyFloat_FromDouble(calcSD((double *) array->data, n));
+    
+}
+
 
 static PyMethodDef std_methods[] = {
-	{"standard_dev", std_standard_dev,	METH_VARARGS,
+	{"standard_dev", std_standard_dev,	METH_VARARGS,    
 	 "Return the standard deviation of a list."},
+    {"standard_dev_numpy", std_standard_dev_numpy, METH_VARARGS,
+     "Return the standard deviation of a numpy array."},
 	{NULL,		NULL}		/* sentinel */
 };
 
-static struct PyModuleDef stdmodule = {
+PyModuleDef stdmodule = {
     PyModuleDef_HEAD_INIT,
     "std",   /* name of module */
     NULL, /* module documentation, may be NULL */
@@ -59,26 +86,4 @@ static struct PyModuleDef stdmodule = {
 PyMODINIT_FUNC PyInit_std(void)
 {
     return PyModule_Create(&stdmodule);
-}
-
-
-int main(int argc, char **argv)
-{
-    wchar_t *program = Py_DecodeLocale(argv[0], NULL);
-    if (program == NULL) {
-        fprintf(stderr, "Fatal error: cannot decode argv[0]\n");
-        exit(1);
-    }
-
-    /* Add a built-in module, before Py_Initialize */
-    PyImport_AppendInittab("std", PyInit_std);
-
-    /* Pass argv[0] to the Python interpreter */
-    Py_SetProgramName(program);
-
-    /* Initialize the Python interpreter.  Required. */
-    Py_Initialize();
-
-    PyMem_RawFree(program);
-    return 0;
 }
