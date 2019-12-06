@@ -5,6 +5,19 @@
 
 A package with a single function. It's entire purpose is to return a set of break points that can be used to discretize a continuous variable. It does this through recursive partitioning using information value.
 
+## Installation
+
+```python
+python -m pip install git+https://github.com/Zelazny7/ivpy.git
+```
+
+or
+
+```python
+python -m pip install ivpy
+```
+
+
 ## Features
 
 - Discretize continuous arrays using a supervised algorithm guided by information value.
