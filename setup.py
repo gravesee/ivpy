@@ -1,3 +1,4 @@
+from setuptools import find_packages
 from distutils.core import setup, Extension
 import numpy
 
@@ -10,6 +11,6 @@ setup(name='ivpy',
       author='Eric E. Graves',
       author_email='gravcon5+ivpy@gmail.com',
       license='LICENSE.txt',
-      packages=['ivpy'],
+      packages=find_packages(),
       description='Discretize continuous arrays using information value.',
       ext_modules=[extension])
