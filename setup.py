@@ -7,5 +7,9 @@ extension = Extension('_core', sources=sources, include_dirs=[numpy.get_include(
 
 setup(name='ivpy',
       version='0.1',
+      author='Eric E. Graves',
+      author_email='gravcon5+ivpy@gmail.com',
+      license='LICENSE.txt',
+      packages=['ivpy'],
       description='Discretize continuous arrays using information value.',
       ext_modules=[extension])
